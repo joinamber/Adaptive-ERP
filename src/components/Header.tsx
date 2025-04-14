@@ -14,8 +14,8 @@ const Header: React.FC = () => {
         <Link to="/" className="flex items-center space-x-2">
           {isHomePage ? (
             <>
-              <Brain className="h-8 w-8 text-blue-600" />
-              <span className="text-2xl font-semibold text-blue-700">Adaptive Intelligence</span>
+              <Brain className="h-8 w-8 text-adaptive-primary" />
+              <span className="text-2xl font-semibold text-adaptive-primary">Adaptive Intelligence</span>
             </>
           ) : (
             <>
@@ -25,11 +25,11 @@ const Header: React.FC = () => {
           )}
         </Link>
         <nav className="hidden md:flex items-center space-x-6">
-          <Link to="/" className="text-gray-600 hover:text-primary transition-colors">
+          <Link to="/" className="text-gray-600 hover:text-adaptive-primary transition-colors">
             Home
           </Link>
           <Button variant="outline" asChild>
-            <Link to="/">New RFP</Link>
+            <Link to="/rfp">New RFP</Link>
           </Button>
         </nav>
       </div>

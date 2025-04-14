@@ -1,18 +1,104 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/Header";
 import { X } from "lucide-react";
 
+// Data for the different tabs
+const transformationData = {
+  banking: {
+    title: "Banking & Finance",
+    cards: [
+      {
+        title: "Intelligent Financial Close",
+        items: [
+          "Auto-reconciliation",
+          "Reduction in manual matching tasks",
+          "Faster close cycles"
+        ]
+      },
+      {
+        title: "Treasury & Cash Management",
+        items: [
+          "Dynamic cash flow forecasting",
+          "Lower short-term borrowing costs"
+        ]
+      },
+      {
+        title: "Regulatory Compliance",
+        items: [
+          "Continuous monitoring",
+          "Automatically identifies affected processes"
+        ]
+      }
+    ]
+  },
+  ecommerce: {
+    title: "Ecommerce Operations",
+    cards: [
+      {
+        title: "Intelligent Product Catalog",
+        items: [
+          "Auto product classification",
+          "Improve search relevancy"
+        ]
+      },
+      {
+        title: "Customer Service Automation",
+        items: [
+          "Full context awareness",
+          "Reduction in manual ticket handling"
+        ]
+      },
+      {
+        title: "Return Processing",
+        items: [
+          "Return classification",
+          "Authenticity verification"
+        ]
+      }
+    ]
+  },
+  logistics: {
+    title: "Logistics & Supply Chain",
+    cards: [
+      {
+        title: "Supply Chain Risk Management",
+        items: [
+          "Monitor supply chain vulnerabilities",
+          "Recommend optimal approaches"
+        ]
+      },
+      {
+        title: "Demand Sensing & Forecasting",
+        items: [
+          "Unstructured market signals",
+          "Visual data analysis"
+        ]
+      },
+      {
+        title: "Intelligent Inventory Optimization",
+        items: [
+          "Understand supply constraints",
+          "Initiate procurement actions"
+        ]
+      }
+    ]
+  }
+};
+
 const Home = () => {
+  const [activeTab, setActiveTab] = useState("ecommerce");
+
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-adaptive-background">
       <Header />
       
       {/* Hero Section */}
-      <div className="bg-blue-700 text-white">
+      <div className="bg-adaptive-primary text-white">
         <div className="rfp-container py-24 md:py-32 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-8">
             AI TRANSFORMING<br />ERP SYSTEMS
@@ -23,25 +109,25 @@ const Home = () => {
           </p>
           <Button 
             asChild 
-            className="bg-[#c5ff00] hover:bg-[#d9ff66] text-black text-lg py-6 px-8"
+            className="bg-adaptive-secondary hover:bg-opacity-80 text-adaptive-primary text-lg py-6 px-8"
           >
-            <Link to="/">GET STARTED</Link>
+            <Link to="/rfp">GET STARTED</Link>
           </Button>
         </div>
-        <div className="bg-[#c5ff00] h-12 md:h-16 w-full"></div>
+        <div className="bg-adaptive-secondary h-12 md:h-16 w-full"></div>
       </div>
 
       {/* How AI Changes the Game Section */}
       <section className="py-16 md:py-24">
         <div className="rfp-container">
-          <h2 className="text-3xl md:text-5xl font-bold text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-bold text-center mb-16 text-adaptive-primary">
             HOW AI CHANGES THE GAME
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card className="p-8 shadow-lg text-center">
               <div className="text-5xl mb-6">💰</div>
-              <h3 className="text-2xl font-bold text-blue-600 mb-4">Cost Reduction</h3>
+              <h3 className="text-2xl font-bold text-adaptive-primary mb-4">Cost Reduction</h3>
               <p className="text-gray-700">
                 Significant cost reduction in building and shipping software
               </p>
@@ -49,7 +135,7 @@ const Home = () => {
             
             <Card className="p-8 shadow-lg text-center">
               <div className="text-5xl mb-6">🤖</div>
-              <h3 className="text-2xl font-bold text-blue-600 mb-4">Proactive AI Agents</h3>
+              <h3 className="text-2xl font-bold text-adaptive-primary mb-4">Proactive AI Agents</h3>
               <p className="text-gray-700">
                 AI agents can proactively identify opportunities and risks
               </p>
@@ -57,7 +143,7 @@ const Home = () => {
             
             <Card className="p-8 shadow-lg text-center">
               <div className="text-5xl mb-6">🏭</div>
-              <h3 className="text-2xl font-bold text-blue-600 mb-4">Industry-Specific Intelligence</h3>
+              <h3 className="text-2xl font-bold text-adaptive-primary mb-4">Industry-Specific Intelligence</h3>
               <p className="text-gray-700">
                 Vertical-specific AI models can encode industry best practices
               </p>
@@ -69,15 +155,15 @@ const Home = () => {
       {/* Problems with Traditional ERP */}
       <section className="py-16 md:py-24 bg-gray-50">
         <div className="rfp-container">
-          <h2 className="text-3xl md:text-5xl font-bold text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-bold text-center mb-16 text-adaptive-primary">
             THE PROBLEMS WITH TRADITIONAL ERP
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
             <Card className="p-8 shadow-lg">
               <div className="flex items-start mb-4">
-                <X className="text-blue-600 h-8 w-8 mr-3 flex-shrink-0" />
-                <h3 className="text-2xl font-bold text-blue-600">Legacy Systems</h3>
+                <X className="text-adaptive-primary h-8 w-8 mr-3 flex-shrink-0" />
+                <h3 className="text-2xl font-bold text-adaptive-primary">Legacy Systems</h3>
               </div>
               <p className="text-gray-700">
                 The ERP market is massive ($55B+) but dominated by legacy systems designed before the AI revolution
@@ -86,8 +172,8 @@ const Home = () => {
             
             <Card className="p-8 shadow-lg">
               <div className="flex items-start mb-4">
-                <X className="text-blue-600 h-8 w-8 mr-3 flex-shrink-0" />
-                <h3 className="text-2xl font-bold text-blue-600">Complex & Rigid</h3>
+                <X className="text-adaptive-primary h-8 w-8 mr-3 flex-shrink-0" />
+                <h3 className="text-2xl font-bold text-adaptive-primary">Complex & Rigid</h3>
               </div>
               <p className="text-gray-700">
                 Traditional ERPs are complex, rigid, and often fail to deliver on promises of efficiency
@@ -98,8 +184,8 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card className="p-8 shadow-lg">
               <div className="flex items-start mb-4">
-                <X className="text-blue-600 h-8 w-8 mr-3 flex-shrink-0" />
-                <h3 className="text-2xl font-bold text-blue-600">Implementation Failures</h3>
+                <X className="text-adaptive-primary h-8 w-8 mr-3 flex-shrink-0" />
+                <h3 className="text-2xl font-bold text-adaptive-primary">Implementation Failures</h3>
               </div>
               <p className="text-gray-700">
                 Implementation failures and massive cost overruns are common
@@ -108,8 +194,8 @@ const Home = () => {
             
             <Card className="p-8 shadow-lg">
               <div className="flex items-start mb-4">
-                <X className="text-blue-600 h-8 w-8 mr-3 flex-shrink-0" />
-                <h3 className="text-2xl font-bold text-blue-600">Siloed Data</h3>
+                <X className="text-adaptive-primary h-8 w-8 mr-3 flex-shrink-0" />
+                <h3 className="text-2xl font-bold text-adaptive-primary">Siloed Data</h3>
               </div>
               <p className="text-gray-700">
                 Data often remains siloed despite promises of integration
@@ -120,62 +206,62 @@ const Home = () => {
       </section>
 
       {/* Core AI Technologies */}
-      <section className="py-16 md:py-24 bg-blue-700 text-white">
+      <section className="py-16 md:py-24 bg-adaptive-primary text-white">
         <div className="rfp-container">
           <h2 className="text-3xl md:text-5xl font-bold text-center mb-16">
             CORE AI TECHNOLOGIES TRANSFORMING ERP
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-blue-600 p-8 rounded-lg">
-              <h3 className="text-2xl font-bold text-[#c5ff00] mb-6">Foundation Models Integration</h3>
+            <div className="bg-opacity-20 bg-white p-8 rounded-lg">
+              <h3 className="text-2xl font-bold text-adaptive-secondary mb-6">Foundation Models Integration</h3>
               <ul className="space-y-4">
                 <li className="flex items-center">
-                  <span className="text-[#c5ff00] mr-2">•</span>
+                  <span className="text-adaptive-secondary mr-2">•</span>
                   Natural language UI
                 </li>
                 <li className="flex items-center">
-                  <span className="text-[#c5ff00] mr-2">•</span>
+                  <span className="text-adaptive-secondary mr-2">•</span>
                   Conversational prompts
                 </li>
                 <li className="flex items-center">
-                  <span className="text-[#c5ff00] mr-2">•</span>
+                  <span className="text-adaptive-secondary mr-2">•</span>
                   Contextual recommendations
                 </li>
               </ul>
             </div>
             
-            <div className="bg-blue-600 p-8 rounded-lg">
-              <h3 className="text-2xl font-bold text-[#c5ff00] mb-6">AI Agents & Orchestration</h3>
+            <div className="bg-opacity-20 bg-white p-8 rounded-lg">
+              <h3 className="text-2xl font-bold text-adaptive-secondary mb-6">AI Agents & Orchestration</h3>
               <ul className="space-y-4">
                 <li className="flex items-center">
-                  <span className="text-[#c5ff00] mr-2">•</span>
+                  <span className="text-adaptive-secondary mr-2">•</span>
                   Autonomous workflow
                 </li>
                 <li className="flex items-center">
-                  <span className="text-[#c5ff00] mr-2">•</span>
+                  <span className="text-adaptive-secondary mr-2">•</span>
                   Dynamic adaptation
                 </li>
                 <li className="flex items-center">
-                  <span className="text-[#c5ff00] mr-2">•</span>
+                  <span className="text-adaptive-secondary mr-2">•</span>
                   Cross-system coordination
                 </li>
               </ul>
             </div>
             
-            <div className="bg-blue-600 p-8 rounded-lg md:col-span-2 lg:col-span-1">
-              <h3 className="text-2xl font-bold text-[#c5ff00] mb-6">Knowledge Graph Technologies</h3>
+            <div className="bg-opacity-20 bg-white p-8 rounded-lg md:col-span-2 lg:col-span-1">
+              <h3 className="text-2xl font-bold text-adaptive-secondary mb-6">Knowledge Graph Technologies</h3>
               <ul className="space-y-4">
                 <li className="flex items-center">
-                  <span className="text-[#c5ff00] mr-2">•</span>
+                  <span className="text-adaptive-secondary mr-2">•</span>
                   Semantic data integration
                 </li>
                 <li className="flex items-center">
-                  <span className="text-[#c5ff00] mr-2">•</span>
+                  <span className="text-adaptive-secondary mr-2">•</span>
                   Causal reasoning capabilities
                 </li>
                 <li className="flex items-center">
-                  <span className="text-[#c5ff00] mr-2">•</span>
+                  <span className="text-adaptive-secondary mr-2">•</span>
                   Institutional knowledge capture
                 </li>
               </ul>
@@ -187,95 +273,126 @@ const Home = () => {
       {/* Key Areas of Transformation */}
       <section className="py-16 md:py-24">
         <div className="rfp-container">
-          <h2 className="text-3xl md:text-5xl font-bold text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-bold text-center mb-16 text-adaptive-primary">
             KEY AREAS OF TRANSFORMATION
           </h2>
           
-          <div className="flex justify-center mb-12">
-            <div className="border-b-2 border-gray-200 inline-flex">
-              <button className="px-4 py-2 font-medium">Banking & Finance</button>
-              <button className="px-4 py-2 font-medium border-b-2 border-blue-600 -mb-0.5 text-blue-600">
-                Ecommerce Operations
-              </button>
-              <button className="px-4 py-2 font-medium">Logistics & Supply Chain</button>
+          <Tabs 
+            defaultValue="ecommerce" 
+            value={activeTab} 
+            onValueChange={setActiveTab}
+            className="w-full"
+          >
+            <div className="flex justify-center mb-12">
+              <TabsList className="mb-2">
+                <TabsTrigger 
+                  value="banking"
+                  className={`px-6 py-3 text-lg font-medium ${activeTab === 'banking' ? 'text-adaptive-secondary border-b-2 border-adaptive-secondary' : 'text-gray-600'}`}
+                >
+                  Banking & Finance
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="ecommerce"
+                  className={`px-6 py-3 text-lg font-medium ${activeTab === 'ecommerce' ? 'text-adaptive-secondary border-b-2 border-adaptive-secondary' : 'text-gray-600'}`}
+                >
+                  Ecommerce Operations
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="logistics"
+                  className={`px-6 py-3 text-lg font-medium ${activeTab === 'logistics' ? 'text-adaptive-secondary border-b-2 border-adaptive-secondary' : 'text-gray-600'}`}
+                >
+                  Logistics & Supply Chain
+                </TabsTrigger>
+              </TabsList>
             </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="p-8 shadow-lg">
-              <h3 className="text-2xl font-bold text-blue-600 mb-4">Intelligent Product Catalog</h3>
-              <ul className="space-y-2">
-                <li className="flex items-start">
-                  <span className="text-[#c5ff00] mr-2 text-lg">•</span>
-                  <span>Auto product classification</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-[#c5ff00] mr-2 text-lg">•</span>
-                  <span>Improve search relevancy</span>
-                </li>
-              </ul>
-            </Card>
             
-            <Card className="p-8 shadow-lg">
-              <h3 className="text-2xl font-bold text-blue-600 mb-4">Customer Service Automation</h3>
-              <ul className="space-y-2">
-                <li className="flex items-start">
-                  <span className="text-[#c5ff00] mr-2 text-lg">•</span>
-                  <span>Full context awareness</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-[#c5ff00] mr-2 text-lg">•</span>
-                  <span>Reduction in manual ticket handling</span>
-                </li>
-              </ul>
-            </Card>
+            <TabsContent value="banking" className="animate-fade-in">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {transformationData.banking.cards.map((card, index) => (
+                  <Card key={index} className="p-8 shadow-lg">
+                    <h3 className="text-2xl font-bold text-adaptive-primary mb-4">{card.title}</h3>
+                    <ul className="space-y-2">
+                      {card.items.map((item, i) => (
+                        <li key={i} className="flex items-start">
+                          <span className="text-adaptive-secondary mr-2 text-lg">•</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
             
-            <Card className="p-8 shadow-lg">
-              <h3 className="text-2xl font-bold text-blue-600 mb-4">Return Processing</h3>
-              <ul className="space-y-2">
-                <li className="flex items-start">
-                  <span className="text-[#c5ff00] mr-2 text-lg">•</span>
-                  <span>Return classification</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-[#c5ff00] mr-2 text-lg">•</span>
-                  <span>Authenticity verification</span>
-                </li>
-              </ul>
-            </Card>
-          </div>
+            <TabsContent value="ecommerce" className="animate-fade-in">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {transformationData.ecommerce.cards.map((card, index) => (
+                  <Card key={index} className="p-8 shadow-lg">
+                    <h3 className="text-2xl font-bold text-adaptive-primary mb-4">{card.title}</h3>
+                    <ul className="space-y-2">
+                      {card.items.map((item, i) => (
+                        <li key={i} className="flex items-start">
+                          <span className="text-adaptive-secondary mr-2 text-lg">•</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="logistics" className="animate-fade-in">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {transformationData.logistics.cards.map((card, index) => (
+                  <Card key={index} className="p-8 shadow-lg">
+                    <h3 className="text-2xl font-bold text-adaptive-primary mb-4">{card.title}</h3>
+                    <ul className="space-y-2">
+                      {card.items.map((item, i) => (
+                        <li key={i} className="flex items-start">
+                          <span className="text-adaptive-secondary mr-2 text-lg">•</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </section>
 
       {/* Quote Section */}
-      <section className="py-16 md:py-24 bg-[#c5ff00]">
+      <section className="py-16 md:py-24 bg-adaptive-secondary">
         <div className="rfp-container text-center">
-          <h2 className="text-3xl md:text-5xl font-bold text-blue-700 mb-4">
+          <h2 className="text-3xl md:text-5xl font-bold text-adaptive-primary mb-4">
             "The best way to predict the future is to invent it."
           </h2>
-          <p className="text-xl font-medium text-blue-700">- Alan Kay</p>
+          <p className="text-xl font-medium text-adaptive-primary">- Alan Kay</p>
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="py-16 md:py-24">
         <div className="rfp-container text-center">
-          <h2 className="text-3xl md:text-5xl font-bold text-blue-600 mb-6">
+          <h2 className="text-3xl md:text-5xl font-bold text-adaptive-primary mb-6">
             Ready to Transform Your ERP Experience?
           </h2>
           <p className="text-xl max-w-3xl mx-auto mb-12">
             Join us in reimagining enterprise systems with AI at their core.
           </p>
           <Button 
-            className="bg-[#c5ff00] hover:bg-[#d9ff66] text-black text-lg py-6 px-8"
+            asChild
+            className="bg-adaptive-cta hover:bg-opacity-90 text-white text-lg py-6 px-8"
           >
-            CONTACT US
+            <Link to="/rfp">CREATE YOUR RFP</Link>
           </Button>
         </div>
       </section>
 
       {/* Custom Footer */}
-      <footer className="bg-blue-700 text-white py-6">
+      <footer className="bg-adaptive-primary text-white py-6">
         <div className="rfp-container">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
@@ -283,7 +400,7 @@ const Home = () => {
             </div>
             
             <div className="mb-4 md:mb-0 text-center">
-              <p className="text-sm text-blue-200">
+              <p className="text-sm text-adaptive-accent">
                 © {new Date().getFullYear()} Adaptive Intelligence. All rights reserved.
               </p>
             </div>
@@ -291,7 +408,7 @@ const Home = () => {
             <div className="text-right">
               <p className="text-sm">
                 A project by Co.Alt Lab<br />
-                <a href="mailto:hello@coaltlab.com" className="text-blue-200 hover:text-white">
+                <a href="mailto:hello@coaltlab.com" className="text-adaptive-accent hover:text-white">
                   hello@coaltlab.com
                 </a>
               </p>

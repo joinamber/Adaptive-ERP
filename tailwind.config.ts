@@ -70,6 +70,12 @@ export default {
 					light: '#F1F5F9',
 				},
 				adaptive: {
+					// Updated colors based on the provided color scheme
+					primary: '#2E2E2E',    // Dark Charcoal
+					secondary: '#00FFB3',  // Neon Green
+					accent: '#B0BEC5',     // Cool Silver
+					background: '#FAFAFA', // Ghost White
+					cta: '#00CFFF',        // Bright Aqua
 					blue: '#0000FF',
 					lime: '#c5ff00'
 				}

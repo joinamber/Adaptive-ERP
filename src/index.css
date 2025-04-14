@@ -84,9 +84,18 @@
 }
 
 .section-heading {
-  @apply text-2xl font-semibold text-rfp-blue mb-4;
+  @apply text-2xl font-semibold text-adaptive-primary mb-4;
 }
 
 .form-section {
   @apply bg-white p-6 rounded-lg shadow-md mb-6;
+}
+
+/* New Tab styles */
+.tab-active {
+  @apply text-adaptive-secondary border-b-2 border-adaptive-secondary;
+}
+
+.tab-inactive {
+  @apply text-gray-600 hover:text-adaptive-primary transition-colors;
 }
