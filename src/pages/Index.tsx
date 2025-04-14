@@ -25,7 +25,8 @@ const iconMap: Record<string, React.ReactNode> = {
   "file-plus": <FilePlus className="h-8 w-8 text-primary" />
 };
 
-const customTemplateIndex = rfpTemplates.findIndex(template => template.name === "Custom RFP RFP");
+// Find and correct the Custom RFP template name
+const customTemplateIndex = rfpTemplates.findIndex(template => template.id === "custom");
 if (customTemplateIndex !== -1) {
   rfpTemplates[customTemplateIndex].name = "Custom RFP";
 }
