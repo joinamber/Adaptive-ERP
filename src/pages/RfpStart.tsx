@@ -39,7 +39,7 @@ const Index = () => {
   const handleTemplateSelect = (templateId: string) => {
     resetRfp();
     setCurrentTemplate(templateId);
-    navigate(`/editor/${templateId}`);
+    navigate(`/rfp/editor/${templateId}`);
   };
 
   return (
