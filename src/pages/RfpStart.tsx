@@ -8,13 +8,13 @@ import {
   Truck, 
   Server, 
   FilePlus,
-  ArrowRight,
-  FileText
+  ArrowRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useRfp } from "@/contexts/RfpContext";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { rfpTemplates } from "@/data/templates";
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -32,7 +32,7 @@ if (customTemplateIndex !== -1) {
   rfpTemplates[customTemplateIndex].name = "Custom RFP";
 }
 
-const Index = () => {
+const RfpStart = () => {
   const navigate = useNavigate();
   const { setCurrentTemplate, resetRfp } = useRfp();
 
@@ -86,7 +86,7 @@ const Index = () => {
             </div>
           </section>
           
-          <section className="bg-white rounded-lg shadow-md p-8 mb-12">
+          <section id="how-it-works" className="bg-white rounded-lg shadow-md p-8 mb-12 scroll-mt-20">
             <h2 className="section-heading mb-6">How It Works</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
@@ -120,26 +120,9 @@ const Index = () => {
           </section>
         </div>
       </main>
-      <footer className="bg-rfp-blue text-white py-8">
-        <div className="rfp-container">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-4 md:mb-0">
-              <p className="flex items-center">
-                <FileText className="h-5 w-5 mr-2" />
-                <span className="font-semibold">RFP Craft</span>
-              </p>
-              <p className="text-sm mt-1 text-blue-100">
-                AI-Powered RFP Generator for Business Professionals
-              </p>
-            </div>
-            <p className="text-sm text-blue-100">
-              © {new Date().getFullYear()} RFP Craft. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
 
-export default Index;
+export default RfpStart;
