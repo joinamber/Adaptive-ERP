@@ -1,12 +1,14 @@
 
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FileText } from "lucide-react";
+import { FileText, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Header: React.FC = () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+  const isMobile = useIsMobile();
   
   return (
     <header className="bg-white border-b border-gray-200">
@@ -38,6 +40,13 @@ const Header: React.FC = () => {
             <Link to="/rfp">New RFP</Link>
           </Button>
         </nav>
+        {isMobile && (
+          <div className="md:hidden">
+            <Button variant="ghost" size="icon">
+              <Menu className="h-6 w-6" />
+            </Button>
+          </div>
+        )}
       </div>
     </header>
   );
