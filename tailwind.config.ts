@@ -113,7 +113,7 @@ export default {
 				'fade-in': 'fade-in 0.5s ease-out'
 			},
 			fontFamily: {
-				sans: ['Inter', 'sans-serif']
+				sans: ['Montserrat', 'sans-serif']
 			}
 		}
 	},
