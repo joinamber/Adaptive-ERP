@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, FileDown, Mail, Link as LinkIcon, Check } from "lucide-react";
+import { ArrowLeft, FileDown, Link as LinkIcon, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useRfp } from "@/contexts/RfpContext";
@@ -46,9 +46,6 @@ const RfpPreview = () => {
       doc.text(`Department: ${rfpData.department || "Not specified"}`, 20, 50);
       doc.text(`Release Date: ${formatDate(rfpData.timeline.releaseDate)}`, 20, 60);
       
-      // Add sections with content
-      let yPosition = 80;
-      
       // Helper function to add section content with word wrapping
       const addSection = (title: string, content: string) => {
         doc.setFontSize(14);
@@ -68,6 +65,7 @@ const RfpPreview = () => {
       };
       
       // Add RFP sections
+      let yPosition = 80;
       addSection("Overview", rfpData.overview);
       addSection("Background", rfpData.background);
       addSection("Objectives", rfpData.objectives);
@@ -145,46 +143,6 @@ const RfpPreview = () => {
       toast({
         title: "Export Failed",
         description: "There was an error exporting the document. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handleShare = (method: string) => {
-    if (method === 'email') {
-      shareViaEmail();
-    } else if (method === 'link') {
-      copyShareLink();
-    }
-  };
-
-  const shareViaEmail = () => {
-    try {
-      const subject = encodeURIComponent(rfpData.title || "Request for Proposal");
-      const body = encodeURIComponent(`Please find attached our Request for Proposal: ${rfpData.title || "RFP"}.
-
-Organization: ${rfpData.organization || "Not specified"}
-Department: ${rfpData.department || "Not specified"}
-Contact: ${rfpData.contact.name || "Not specified"}
-Email: ${rfpData.contact.email || "Not specified"}
-Phone: ${rfpData.contact.phone || "Not specified"}
-
-Submission Deadline: ${formatDate(rfpData.timeline.submissionDeadline)}
-Decision Date: ${formatDate(rfpData.timeline.decisionDate)}
-
-For full details, please review the attached document or contact us directly.`);
-      
-      window.open(`mailto:?subject=${subject}&body=${body}`);
-      
-      toast({
-        title: "Email Client Opened",
-        description: "Your email client has been opened with the RFP details.",
-      });
-    } catch (error) {
-      console.error("Email share error:", error);
-      toast({
-        title: "Email Share Failed",
-        description: "There was an error opening your email client. Please try again.",
         variant: "destructive",
       });
     }
@@ -272,21 +230,7 @@ For full details, please review the attached document or contact us directly.`);
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="outline" onClick={() => handleShare('email')}>
-                    <Mail className="h-4 w-4 mr-2" />
-                    Share via Email
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Open email client with RFP details</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-            
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button variant="outline" onClick={() => handleShare('link')}>
+                  <Button variant="outline" onClick={copyShareLink}>
                     {copying ? <Check className="h-4 w-4 mr-2" /> : <LinkIcon className="h-4 w-4 mr-2" />}
                     {copying ? "Copied!" : "Copy Share Link"}
                   </Button>

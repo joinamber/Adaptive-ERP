@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Save, Eye } from "lucide-react";
@@ -13,11 +12,13 @@ import { useRfp } from "@/contexts/RfpContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContentGenerator from "@/components/ContentGenerator";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const RfpEditor = () => {
   const { templateId } = useParams();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const isMobile = useIsMobile();
   const { 
     rfpData, 
     updateRfpData, 
@@ -81,11 +82,21 @@ const RfpEditor = () => {
         </div>
 
         <Tabs defaultValue="basic-info" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="basic-info">Basic Information</TabsTrigger>
-            <TabsTrigger value="content">Content Sections</TabsTrigger>
-            <TabsTrigger value="requirements">Requirements & Evaluation</TabsTrigger>
-          </TabsList>
+          {isMobile ? (
+            <div className="mb-6 overflow-x-auto pb-2">
+              <TabsList className="w-auto flex no-wrap min-w-full">
+                <TabsTrigger value="basic-info" className="flex-shrink-0">Basic Information</TabsTrigger>
+                <TabsTrigger value="content" className="flex-shrink-0">Content Sections</TabsTrigger>
+                <TabsTrigger value="requirements" className="flex-shrink-0">Requirements & Evaluation</TabsTrigger>
+              </TabsList>
+            </div>
+          ) : (
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="basic-info">Basic Information</TabsTrigger>
+              <TabsTrigger value="content">Content Sections</TabsTrigger>
+              <TabsTrigger value="requirements">Requirements & Evaluation</TabsTrigger>
+            </TabsList>
+          )}
 
           {/* Basic Information Tab */}
           <TabsContent value="basic-info">
