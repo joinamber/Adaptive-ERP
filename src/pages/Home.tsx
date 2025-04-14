@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -96,9 +97,8 @@ const Home = () => {
   const isMobile = useIsMobile();
   const navigate = useNavigate();
 
-  const navigateToRfp = () => {
-    navigate("/rfp");
-    window.scrollTo(0, 0);
+  const scrollToBottomBanner = () => {
+    bottomSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -116,7 +116,7 @@ const Home = () => {
             intelligence
           </p>
           <Button 
-            onClick={navigateToRfp}
+            onClick={scrollToBottomBanner}
             className="bg-adaptive-secondary hover:bg-opacity-80 text-adaptive-primary text-lg py-5 md:py-6 px-6 md:px-8"
           >
             GET STARTED
@@ -391,7 +391,7 @@ const Home = () => {
             Join us in reimagining enterprise systems with AI at their core.
           </p>
           <Button 
-            onClick={navigateToRfp}
+            onClick={() => navigate("/rfp")}
             className="bg-adaptive-cta hover:bg-opacity-90 text-white text-lg py-5 md:py-6 px-6 md:px-8"
           >
             CREATE YOUR RFP
@@ -437,3 +437,4 @@ const Home = () => {
 };
 
 export default Home;
+
