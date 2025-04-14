@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { 
@@ -25,6 +24,11 @@ const iconMap: Record<string, React.ReactNode> = {
   "server": <Server className="h-8 w-8 text-primary" />,
   "file-plus": <FilePlus className="h-8 w-8 text-primary" />
 };
+
+const customTemplateIndex = rfpTemplates.findIndex(template => template.name === "Custom RFP RFP");
+if (customTemplateIndex !== -1) {
+  rfpTemplates[customTemplateIndex].name = "Custom RFP";
+}
 
 const Index = () => {
   const navigate = useNavigate();

@@ -1,16 +1,19 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, FileDown, Mail, Link as LinkIcon } from "lucide-react";
+import { ArrowLeft, FileDown, Mail, Link as LinkIcon, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useRfp } from "@/contexts/RfpContext";
 import Header from "@/components/Header";
+import jsPDF from "jspdf";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const RfpPreview = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { rfpData } = useRfp();
+  const [copying, setCopying] = useState(false);
 
   const formatDate = (dateString: string) => {
     if (!dateString) return "Not specified";
@@ -22,18 +25,163 @@ const RfpPreview = () => {
   };
 
   const handleExport = (format: string) => {
-    // In a real app, this would generate and download the file
+    if (format === 'pdf') {
+      exportToPdf();
+    } else if (format === 'docx') {
+      exportToDocx();
+    }
+  };
+
+  const exportToPdf = () => {
+    const doc = new jsPDF();
+    
+    // Add title
+    doc.setFontSize(20);
+    doc.text(rfpData.title || "Request for Proposal", 105, 20, { align: 'center' });
+    
+    // Add metadata
+    doc.setFontSize(12);
+    doc.text(`Organization: ${rfpData.organization || "Not specified"}`, 20, 40);
+    doc.text(`Department: ${rfpData.department || "Not specified"}`, 20, 50);
+    doc.text(`Release Date: ${formatDate(rfpData.timeline.releaseDate)}`, 20, 60);
+    
+    // Add sections with content
+    let yPosition = 80;
+    
+    // Helper function to add section content with word wrapping
+    const addSection = (title: string, content: string) => {
+      doc.setFontSize(14);
+      doc.text(title, 20, yPosition);
+      yPosition += 10;
+      
+      doc.setFontSize(12);
+      const splitText = doc.splitTextToSize(content || "Not specified", 170);
+      doc.text(splitText, 20, yPosition);
+      yPosition += splitText.length * 7 + 15;
+      
+      // Add new page if needed
+      if (yPosition > 270) {
+        doc.addPage();
+        yPosition = 20;
+      }
+    };
+    
+    // Add RFP sections
+    addSection("Overview", rfpData.overview);
+    addSection("Background", rfpData.background);
+    addSection("Objectives", rfpData.objectives);
+    addSection("Scope of Work", rfpData.scope);
+    addSection("Requirements", rfpData.requirements);
+    addSection("Evaluation Criteria", rfpData.evaluation);
+    addSection("Budget Information", rfpData.budget);
+    addSection("Terms and Conditions", rfpData.terms);
+    addSection("Submission Instructions", rfpData.submission);
+    
+    // Save PDF
+    const filename = `${rfpData.title || "RFP"}_${new Date().toISOString().split('T')[0]}.pdf`;
+    doc.save(filename);
+    
     toast({
-      title: `Export as ${format.toUpperCase()}`,
-      description: `Your RFP has been exported as a ${format.toUpperCase()} file.`
+      title: "PDF Exported Successfully",
+      description: `Your RFP has been exported as ${filename}`,
+    });
+  };
+
+  const exportToDocx = () => {
+    // Create a text version of the RFP for download
+    let content = `# ${rfpData.title || "Request for Proposal"}\n\n`;
+    content += `Organization: ${rfpData.organization || "Not specified"}\n`;
+    content += `Department: ${rfpData.department || "Not specified"}\n`;
+    content += `Release Date: ${formatDate(rfpData.timeline.releaseDate)}\n\n`;
+    
+    content += `## Contact Information\n`;
+    content += `Name: ${rfpData.contact.name || "Not specified"}\n`;
+    content += `Email: ${rfpData.contact.email || "Not specified"}\n`;
+    content += `Phone: ${rfpData.contact.phone || "Not specified"}\n\n`;
+    
+    content += `## Timeline\n`;
+    content += `Release Date: ${formatDate(rfpData.timeline.releaseDate)}\n`;
+    content += `Submission Deadline: ${formatDate(rfpData.timeline.submissionDeadline)}\n`;
+    content += `Decision Date: ${formatDate(rfpData.timeline.decisionDate)}\n\n`;
+    
+    content += `## 1. Overview\n${rfpData.overview || "Not specified"}\n\n`;
+    content += `## 2. Background\n${rfpData.background || "Not specified"}\n\n`;
+    content += `## 3. Objectives\n${rfpData.objectives || "Not specified"}\n\n`;
+    content += `## 4. Scope of Work\n${rfpData.scope || "Not specified"}\n\n`;
+    content += `## 5. Requirements\n${rfpData.requirements || "Not specified"}\n\n`;
+    content += `## 6. Evaluation Criteria\n${rfpData.evaluation || "Not specified"}\n\n`;
+    content += `## 7. Budget Information\n${rfpData.budget || "Not specified"}\n\n`;
+    content += `## 8. Terms and Conditions\n${rfpData.terms || "Not specified"}\n\n`;
+    content += `## 9. Submission Instructions\n${rfpData.submission || "Not specified"}\n\n`;
+    
+    // Create a download link
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const filename = `${rfpData.title || "RFP"}_${new Date().toISOString().split('T')[0]}.txt`;
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    toast({
+      title: "Document Exported Successfully",
+      description: `Your RFP has been exported as ${filename}`,
     });
   };
 
   const handleShare = (method: string) => {
-    // In a real app, this would share the RFP
+    if (method === 'email') {
+      shareViaEmail();
+    } else if (method === 'link') {
+      copyShareLink();
+    }
+  };
+
+  const shareViaEmail = () => {
+    const subject = encodeURIComponent(rfpData.title || "Request for Proposal");
+    const body = encodeURIComponent(`Please find attached our Request for Proposal: ${rfpData.title || "RFP"}.
+
+Organization: ${rfpData.organization || "Not specified"}
+Department: ${rfpData.department || "Not specified"}
+Contact: ${rfpData.contact.name || "Not specified"}
+Email: ${rfpData.contact.email || "Not specified"}
+Phone: ${rfpData.contact.phone || "Not specified"}
+
+Submission Deadline: ${formatDate(rfpData.timeline.submissionDeadline)}
+Decision Date: ${formatDate(rfpData.timeline.decisionDate)}
+
+For full details, please review the attached document or contact us directly.`);
+    
+    window.open(`mailto:?subject=${subject}&body=${body}`);
+    
     toast({
-      title: `Share via ${method}`,
-      description: `Your RFP has been shared via ${method}.`
+      title: "Email Client Opened",
+      description: "Your email client has been opened with the RFP details.",
+    });
+  };
+
+  const copyShareLink = () => {
+    // In a real app, this would generate a shareable link to the RFP
+    // For this demo, we'll simulate copying the current URL
+    setCopying(true);
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      toast({
+        title: "Link Copied!",
+        description: "Shareable link copied to clipboard.",
+      });
+      
+      // Reset the button state after a delay
+      setTimeout(() => setCopying(false), 2000);
+    }).catch(err => {
+      toast({
+        title: "Copy Failed",
+        description: "Failed to copy link to clipboard.",
+        variant: "destructive",
+      });
+      setCopying(false);
     });
   };
 
@@ -55,22 +203,61 @@ const RfpPreview = () => {
             </h1>
           </div>
           <div className="flex flex-wrap items-center gap-3 mt-4 md:mt-0">
-            <Button variant="outline" onClick={() => handleExport('pdf')}>
-              <FileDown className="h-4 w-4 mr-2" />
-              Export as PDF
-            </Button>
-            <Button variant="outline" onClick={() => handleExport('docx')}>
-              <FileDown className="h-4 w-4 mr-2" />
-              Export as DOCX
-            </Button>
-            <Button variant="outline" onClick={() => handleShare('email')}>
-              <Mail className="h-4 w-4 mr-2" />
-              Share via Email
-            </Button>
-            <Button variant="outline" onClick={() => handleShare('link')}>
-              <LinkIcon className="h-4 w-4 mr-2" />
-              Copy Share Link
-            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="outline" onClick={() => handleExport('pdf')}>
+                    <FileDown className="h-4 w-4 mr-2" />
+                    Export as PDF
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Download as PDF document</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="outline" onClick={() => handleExport('docx')}>
+                    <FileDown className="h-4 w-4 mr-2" />
+                    Export as DOCX
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Download as text document</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="outline" onClick={() => handleShare('email')}>
+                    <Mail className="h-4 w-4 mr-2" />
+                    Share via Email
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Open email client with RFP details</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="outline" onClick={() => handleShare('link')}>
+                    {copying ? <Check className="h-4 w-4 mr-2" /> : <LinkIcon className="h-4 w-4 mr-2" />}
+                    {copying ? "Copied!" : "Copy Share Link"}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Copy shareable link to clipboard</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </div>
 
