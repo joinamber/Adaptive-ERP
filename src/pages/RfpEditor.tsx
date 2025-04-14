@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Save, FileText, Eye, FileOutput } from "lucide-react";
@@ -11,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useRfp } from "@/contexts/RfpContext";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import ContentGenerator from "@/components/ContentGenerator";
 
 const RfpEditor = () => {
@@ -37,7 +37,6 @@ const RfpEditor = () => {
   };
 
   const handleSaveDraft = () => {
-    // In a real app, this would save to a database or localStorage
     toast({
       title: "Draft saved",
       description: "Your RFP has been saved as a draft."
@@ -398,6 +397,7 @@ const RfpEditor = () => {
           </TabsContent>
         </Tabs>
       </div>
+      <Footer />
     </div>
   );
 };
