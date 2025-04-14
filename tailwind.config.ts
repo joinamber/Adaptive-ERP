@@ -68,6 +68,10 @@ export default {
 					teal: '#0F766E',
 					slate: '#475569',
 					light: '#F1F5F9',
+				},
+				adaptive: {
+					blue: '#0000FF',
+					lime: '#c5ff00'
 				}
 			},
 			borderRadius: {
