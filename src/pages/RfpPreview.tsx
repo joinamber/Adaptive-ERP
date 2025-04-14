@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useRfp } from "@/contexts/RfpContext";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import jsPDF from "jspdf";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -404,6 +405,7 @@ For full details, please review the attached document or contact us directly.`);
           </p>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

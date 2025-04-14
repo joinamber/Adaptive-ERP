@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Save, FileText, Eye, FileOutput } from "lucide-react";
@@ -33,7 +34,7 @@ const RfpEditor = () => {
   }, [templateId, currentTemplate, setCurrentTemplate]);
 
   const handlePreview = () => {
-    navigate("/preview");
+    navigate("/rfp/preview");
   };
 
   const handleSaveDraft = () => {
@@ -54,7 +55,7 @@ const RfpEditor = () => {
         <div className="flex flex-col md:flex-row justify-between mb-8">
           <div>
             <button 
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/rfp")}
               className="flex items-center text-gray-600 hover:text-primary mb-4"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
