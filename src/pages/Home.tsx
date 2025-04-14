@@ -1,5 +1,5 @@
-
 import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -8,7 +8,6 @@ import Header from "@/components/Header";
 import { X, Linkedin, Twitter } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-// Data for the different tabs
 const transformationData = {
   banking: {
     title: "Banking & Finance",
@@ -95,9 +94,11 @@ const Home = () => {
   const [activeTab, setActiveTab] = useState("ecommerce");
   const bottomSectionRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
-  
-  const scrollToBottom = () => {
-    bottomSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  const navigate = useNavigate();
+
+  const navigateToRfp = () => {
+    navigate("/rfp");
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -115,7 +116,7 @@ const Home = () => {
             intelligence
           </p>
           <Button 
-            onClick={scrollToBottom}
+            onClick={navigateToRfp}
             className="bg-adaptive-secondary hover:bg-opacity-80 text-adaptive-primary text-lg py-5 md:py-6 px-6 md:px-8"
           >
             GET STARTED
@@ -390,10 +391,10 @@ const Home = () => {
             Join us in reimagining enterprise systems with AI at their core.
           </p>
           <Button 
-            asChild
+            onClick={navigateToRfp}
             className="bg-adaptive-cta hover:bg-opacity-90 text-white text-lg py-5 md:py-6 px-6 md:px-8"
           >
-            <Link to="/rfp">CREATE YOUR RFP</Link>
+            CREATE YOUR RFP
           </Button>
         </div>
       </section>
