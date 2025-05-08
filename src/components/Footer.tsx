@@ -62,8 +62,7 @@ const Footer: React.FC = () => {
             </div>
           </div>
           <div className="pt-4 mt-4 border-t border-white/20">
-            <p className="text-sm">A project by Co.Alt Lab</p>
-            <p className="text-sm text-gray-300">© 2025 Co.Alt Lab. All Rights Reserved.</p>
+            <p className="text-sm text-gray-300">© 2025 Adaptive Intelligence Pte. Ltd. All Rights Reserved.</p>
           </div>
         </div>
       </div>
