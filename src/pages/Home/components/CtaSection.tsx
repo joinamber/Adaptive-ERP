@@ -16,8 +16,8 @@ const CtaSection: React.FC<CtaSectionProps> = ({
           Our research-driven approach ensures every solution is grounded in rigorous methodology 
           and empirical validation.
         </p>
-        <Button onClick={onCreateRfpClick} className="bg-gradient-to-r from-accent to-accent/90 hover:from-accent/90 hover:to-accent/80 text-accent-foreground text-lg py-6 md:py-7 px-8 md:px-12 rounded-lg shadow-elegant transition-all duration-300 hover:shadow-lg hover:scale-[1.02]">
-          Initiate Collaboration
+        <Button asChild className="bg-gradient-to-r from-accent to-accent/90 hover:from-accent/90 hover:to-accent/80 text-accent-foreground text-lg py-6 md:py-7 px-8 md:px-12 rounded-lg shadow-elegant transition-all duration-300 hover:shadow-lg hover:scale-[1.02]">
+          <a href="mailto:hello@coaltlab.com">Initiate Collaboration</a>
         </Button>
       </div>
     </section>;
