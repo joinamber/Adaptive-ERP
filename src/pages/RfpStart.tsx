@@ -39,7 +39,7 @@ const RfpStart = () => {
   const handleTemplateSelect = (templateId: string) => {
     resetRfp();
     setCurrentTemplate(templateId);
-    navigate(`/rfp/editor/${templateId}`);
+    navigate('/rfp/basic-info');
   };
 
   return (

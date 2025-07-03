@@ -10,6 +10,10 @@ interface RfpContextType {
   currentTemplate: Template | null;
   setCurrentTemplate: (templateId: string) => void;
   generateContent: (section: string, prompt: string) => Promise<string>;
+  currentStep: string;
+  setCurrentStep: (step: string) => void;
+  completedSteps: string[];
+  addCompletedStep: (step: string) => void;
 }
 
 export interface Template {
@@ -75,6 +79,8 @@ const RfpContext = createContext<RfpContextType | undefined>(undefined);
 export const RfpProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [rfpData, setRfpData] = useState<RfpData>(defaultRfpData);
   const [currentTemplate, setTemplate] = useState<Template | null>(null);
+  const [currentStep, setCurrentStep] = useState<string>('basic-info');
+  const [completedSteps, setCompletedSteps] = useState<string[]>([]);
 
   const updateRfpData = (data: Partial<RfpData>) => {
     setRfpData((prev) => ({ ...prev, ...data }));
@@ -90,6 +96,17 @@ export const RfpProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const resetRfp = () => {
     setRfpData(defaultRfpData);
     setTemplate(null);
+    setCurrentStep('basic-info');
+    setCompletedSteps([]);
+  };
+
+  const addCompletedStep = (step: string) => {
+    setCompletedSteps(prev => {
+      if (!prev.includes(step)) {
+        return [...prev, step];
+      }
+      return prev;
+    });
   };
 
   const setCurrentTemplate = (templateId: string) => {
@@ -128,6 +145,10 @@ export const RfpProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         currentTemplate,
         setCurrentTemplate,
         generateContent,
+        currentStep,
+        setCurrentStep,
+        completedSteps,
+        addCompletedStep,
       }}
     >
       {children}
