@@ -1,24 +1,109 @@
 import { rfpKnowledgeBase } from '@/data/rfpKnowledgeBase';
+import Groq from 'groq-sdk';
+import { getGroqSettings } from '@/components/SettingsModal';
 
 class LLMService {
+  private groqClient: Groq | null = null;
   private isInitialized = false;
 
   async initialize() {
     if (this.isInitialized) return;
     
     try {
-      // For now, we'll use mock responses until HF Transformers is properly configured
+      const { apiKey } = getGroqSettings();
+      if (!apiKey) {
+        throw new Error('Groq API key not configured');
+      }
+      
+      this.groqClient = new Groq({
+        apiKey,
+        dangerouslyAllowBrowser: true
+      });
+      
       this.isInitialized = true;
     } catch (error) {
       console.error('Failed to initialize LLM:', error);
       this.isInitialized = false;
+      throw error;
     }
   }
 
   async generateContent(section: string, context: any, userPrompt?: string): Promise<string> {
-    // For now, use enhanced mock responses with the knowledge base
-    // In production, this would use the actual LLM
-    return this.generateMockContent(section, context, userPrompt);
+    if (!this.groqClient || !this.isInitialized) {
+      // Fallback to mock content if Groq is not available
+      return this.generateMockContent(section, context, userPrompt);
+    }
+
+    try {
+      return await this.generateGroqContent(section, context, userPrompt);
+    } catch (error) {
+      console.error('Groq generation failed, falling back to mock:', error);
+      return this.generateMockContent(section, context, userPrompt);
+    }
+  }
+
+  private async generateGroqContent(section: string, context: any, userPrompt?: string): Promise<string> {
+    const { model } = getGroqSettings();
+    const { basicInfo } = context;
+    
+    const systemPrompt = this.getSystemPrompt(section);
+    const userMessage = this.buildUserMessage(section, basicInfo, userPrompt);
+
+    const completion = await this.groqClient!.chat.completions.create({
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userMessage }
+      ],
+      model,
+      temperature: 0.7,
+      max_tokens: 2500,
+      top_p: 0.9,
+    });
+
+    return completion.choices[0]?.message?.content || this.generateMockContent(section, context, userPrompt);
+  }
+
+  private getSystemPrompt(section: string): string {
+    const basePrompt = "You are a professional RFP writing expert. Generate well-structured, comprehensive content for procurement documents. Use clear headings, bullet points, and professional language. Do not use markdown formatting (no # symbols).";
+    
+    switch (section) {
+      case 'overview':
+        return `${basePrompt} Focus on creating a compelling project overview that clearly states the purpose, expected outcomes, and strategic importance.`;
+      case 'background':
+        return `${basePrompt} Explain the business context, current challenges, and organizational drivers for this RFP.`;
+      case 'objectives':
+        return `${basePrompt} Define specific, measurable objectives using SMART criteria. Include both functional and business objectives.`;
+      case 'scope':
+        return `${basePrompt} Clearly define what is included and excluded from the project scope. Break down into phases and deliverables.`;
+      case 'requirements':
+        return `${basePrompt} Create detailed technical requirements including functional, non-functional, integration, and compliance requirements.`;
+      case 'evaluation':
+        return `${basePrompt} Develop weighted evaluation criteria for vendor selection with clear scoring methodology.`;
+      case 'budget':
+        return `${basePrompt} Provide budget ranges, cost categories, and payment terms. Be realistic and comprehensive.`;
+      case 'terms':
+        return `${basePrompt} Generate standard contract terms including duration, payment, IP rights, and liability considerations.`;
+      case 'submission':
+        return `${basePrompt} Create clear submission instructions including format requirements, deadlines, and evaluation timeline.`;
+      default:
+        return basePrompt;
+    }
+  }
+
+  private buildUserMessage(section: string, basicInfo: any, userPrompt?: string): string {
+    let message = `Generate ${section} content for an RFP titled "${basicInfo?.title || 'Technology Solution'}" for ${basicInfo?.organization || 'the organization'}.`;
+    
+    if (basicInfo?.department) {
+      message += ` This is a ${basicInfo.department} department initiative.`;
+    }
+    
+    if (userPrompt) {
+      message += ` Specific requirements: ${userPrompt}`;
+    }
+    
+    message += ` Make the content professional, comprehensive, and tailored to this specific project.`;
+    
+    return message;
   }
 
   private generateMockContent(section: string, context: any, userPrompt?: string): string {

@@ -11,6 +11,7 @@ import {
   NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { SettingsModal } from "@/components/SettingsModal";
 
 const Header: React.FC = () => {
   const location = useLocation();
@@ -51,6 +52,7 @@ const Header: React.FC = () => {
                   How It Works
                 </a>
               )}
+              <SettingsModal />
               <Button variant="outline" asChild>
                 <Link to="/">Back to Home</Link>
               </Button>
