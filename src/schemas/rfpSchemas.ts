@@ -1,9 +1,9 @@
 import { z } from "zod";
 
 export const basicInfoSchema = z.object({
-  title: z.string().min(1, "RFP title is required").max(200, "Title must be under 200 characters"),
-  organization: z.string().min(1, "Organization name is required").max(100, "Organization name must be under 100 characters"),
-  department: z.string().min(1, "Department is required").max(100, "Department must be under 100 characters"),
+  title: z.string().min(1, "RFP title is required").max(200, "Title must be under 200 characters").regex(/^[a-zA-Z0-9\s\-_.,:()]+$/, "Title contains invalid characters"),
+  organization: z.string().min(1, "Organization name is required").max(100, "Organization name must be under 100 characters").regex(/^[a-zA-Z0-9\s\-_.&,]+$/, "Organization name contains invalid characters"),
+  department: z.string().min(1, "Department is required").max(100, "Department must be under 100 characters").regex(/^[a-zA-Z0-9\s\-_.&,]+$/, "Department contains invalid characters"),
   contact: z.object({
     name: z.string().min(1, "Contact name is required").max(100, "Contact name must be under 100 characters"),
     email: z.string().email("Valid email is required"),
@@ -26,18 +26,18 @@ export const basicInfoSchema = z.object({
 });
 
 export const projectOverviewSchema = z.object({
-  overview: z.string().min(1, "Project overview is required"),
-  background: z.string().min(1, "Background is required"),
-  objectives: z.string().min(1, "Objectives are required"),
-  scope: z.string().min(1, "Scope of work is required"),
+  overview: z.string().min(1, "Project overview is required").max(5000, "Overview must be under 5000 characters"),
+  background: z.string().min(1, "Background is required").max(5000, "Background must be under 5000 characters"),
+  objectives: z.string().min(1, "Objectives are required").max(3000, "Objectives must be under 3000 characters"),
+  scope: z.string().min(1, "Scope of work is required").max(3000, "Scope must be under 3000 characters"),
 });
 
 export const requirementsSchema = z.object({
-  requirements: z.string().min(1, "Technical requirements are required"),
-  evaluation: z.string().min(1, "Evaluation criteria are required"),
-  budget: z.string().min(1, "Budget information is required"),
-  terms: z.string().min(1, "Terms and conditions are required"),
-  submission: z.string().min(1, "Submission instructions are required"),
+  requirements: z.string().min(1, "Technical requirements are required").max(10000, "Requirements must be under 10000 characters"),
+  evaluation: z.string().min(1, "Evaluation criteria are required").max(5000, "Evaluation criteria must be under 5000 characters"),
+  budget: z.string().min(1, "Budget information is required").max(2000, "Budget information must be under 2000 characters"),
+  terms: z.string().min(1, "Terms and conditions are required").max(10000, "Terms must be under 10000 characters"),
+  submission: z.string().min(1, "Submission instructions are required").max(3000, "Submission instructions must be under 3000 characters"),
 });
 
 export const userPromptSchema = z.object({
