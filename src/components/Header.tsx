@@ -24,16 +24,16 @@ const Header: React.FC = () => {
   };
   
   return (
-    <header className="bg-white border-b border-gray-200">
+    <header className="bg-background/95 backdrop-blur-sm border-b border-border sticky top-0 z-50">
       <div className="rfp-container py-4 flex items-center justify-between">
-        <Link to="/" className="flex items-center space-x-2">
+        <Link to="/" className="flex items-center space-x-3">
           <img 
             src="/lovable-uploads/e2efb9e3-5ec3-4651-83aa-fc193ed61c0f.png" 
-            alt="Adaptive Intelligence Logo" 
+            alt="AI Research Institute Logo" 
             className="h-10 w-auto"
           />
-          <span className="text-2xl font-semibold text-adaptive-primary ml-2 hidden md:inline">
-            Adaptive Intelligence
+          <span className="font-heading text-xl font-medium text-foreground ml-2 hidden md:inline">
+            AI Research Institute
           </span>
         </Link>
         
@@ -41,29 +41,29 @@ const Header: React.FC = () => {
         <nav className="hidden md:flex items-center space-x-6">
           {isRfpPage ? (
             <>
-              <Link to="/rfp" className="text-gray-600 hover:text-adaptive-primary transition-colors">
-                RFP Editor
+              <Link to="/rfp" className="text-muted-foreground hover:text-accent transition-colors">
+                Research Collaboration
               </Link>
               {location.pathname === '/rfp' && (
                 <a 
                   href="#how-it-works" 
-                  className="text-gray-600 hover:text-adaptive-primary transition-colors"
+                  className="text-muted-foreground hover:text-accent transition-colors"
                 >
-                  How It Works
+                  Methodology
                 </a>
               )}
               <SettingsModal />
               <Button variant="outline" asChild>
-                <Link to="/">Back to Home</Link>
+                <Link to="/">Institute Home</Link>
               </Button>
             </>
           ) : (
             <>
-              <Link to="/" className="text-gray-600 hover:text-adaptive-primary transition-colors">
-                Home
+              <Link to="/" className="text-muted-foreground hover:text-accent transition-colors">
+                Research
               </Link>
               <Button variant="outline" asChild>
-                <Link to="/rfp">Create RFP</Link>
+                <Link to="/rfp">Begin Collaboration</Link>
               </Button>
             </>
           )}
@@ -85,49 +85,49 @@ const Header: React.FC = () => {
       
       {/* Mobile Menu */}
       {isMobile && mobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 py-4">
+        <div className="md:hidden bg-background border-t border-border py-4">
           <div className="rfp-container flex flex-col space-y-4">
             {isRfpPage ? (
               <>
                 <Link 
                   to="/rfp" 
-                  className="px-4 py-2 text-gray-600 hover:text-adaptive-primary transition-colors"
+                  className="px-4 py-2 text-muted-foreground hover:text-accent transition-colors"
                   onClick={toggleMobileMenu}
                 >
-                  RFP Editor
+                  Research Collaboration
                 </Link>
                 {location.pathname === '/rfp' && (
                   <a 
                     href="#how-it-works" 
-                    className="px-4 py-2 text-gray-600 hover:text-adaptive-primary transition-colors"
+                    className="px-4 py-2 text-muted-foreground hover:text-accent transition-colors"
                     onClick={toggleMobileMenu}
                   >
-                    How It Works
+                    Methodology
                   </a>
                 )}
                 <Link 
                   to="/" 
-                  className="px-4 py-2 text-gray-600 hover:text-adaptive-primary transition-colors"
+                  className="px-4 py-2 text-muted-foreground hover:text-accent transition-colors"
                   onClick={toggleMobileMenu}
                 >
-                  Back to Home
+                  Institute Home
                 </Link>
               </>
             ) : (
               <>
                 <Link 
                   to="/" 
-                  className="px-4 py-2 text-gray-600 hover:text-adaptive-primary transition-colors"
+                  className="px-4 py-2 text-muted-foreground hover:text-accent transition-colors"
                   onClick={toggleMobileMenu}
                 >
-                  Home
+                  Research
                 </Link>
                 <Link 
                   to="/rfp" 
-                  className="px-4 py-2 text-gray-600 hover:text-adaptive-primary transition-colors"
+                  className="px-4 py-2 text-muted-foreground hover:text-accent transition-colors"
                   onClick={toggleMobileMenu}
                 >
-                  Create RFP
+                  Begin Collaboration
                 </Link>
               </>
             )}

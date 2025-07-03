@@ -113,7 +113,13 @@ export default {
 				'fade-in': 'fade-in 0.5s ease-out'
 			},
 			fontFamily: {
-				sans: ['Montserrat', 'sans-serif']
+				heading: ['Playfair Display', 'serif'],
+				body: ['Inter', 'sans-serif'],
+				sans: ['Inter', 'sans-serif']
+			},
+			boxShadow: {
+				elegant: 'var(--shadow-elegant)',
+				soft: 'var(--shadow-soft)'
 			}
 		}
 	},
