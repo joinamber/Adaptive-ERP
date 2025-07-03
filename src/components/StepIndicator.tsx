@@ -63,17 +63,23 @@ const StepIndicator: React.FC<StepIndicatorProps> = ({ steps, currentStep, compl
                 </div>
               </div>
               
-              {/* Connector Line */}
+              {/* Enhanced Connector Line */}
               {index < steps.length - 1 && (
-                <div
-                  className={cn(
-                    "flex-1 h-0.5 mx-4 transition-colors",
-                    {
-                      "bg-primary": isCompleted,
-                      "bg-muted": !isCompleted,
-                    }
-                  )}
-                />
+                <div className="flex-1 mx-4 relative flex items-center">
+                  {/* Background line */}
+                  <div className="w-full h-1 bg-muted rounded-full" />
+                  {/* Progress fill */}
+                  <div
+                    className={cn(
+                      "absolute left-0 h-1 rounded-full transition-all duration-500 ease-in-out",
+                      {
+                        "w-full bg-primary": isCompleted,
+                        "w-1/2 bg-primary": isCurrent,
+                        "w-0 bg-muted": isUpcoming,
+                      }
+                    )}
+                  />
+                </div>
               )}
             </div>
           );
