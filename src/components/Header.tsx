@@ -35,9 +35,7 @@ const Header: React.FC = () => {
                 <Link to="/">Institute Home</Link>
               </Button>
             </> : <>
-              <Link to="/" className="text-muted-foreground hover:text-accent transition-colors">
-                Research
-              </Link>
+              
               <Button variant="outline" asChild>
                 <Link to="/rfp">Begin Collaboration</Link>
               </Button>
