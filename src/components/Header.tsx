@@ -54,9 +54,6 @@ const Header: React.FC = () => {
                   Institute Home
                 </Link>
               </> : <>
-                <Link to="/" className="px-4 py-2 text-muted-foreground hover:text-accent transition-colors" onClick={toggleMobileMenu}>
-                  Research
-                </Link>
                 <Link to="/rfp" className="px-4 py-2 text-muted-foreground hover:text-accent transition-colors" onClick={toggleMobileMenu}>
                   Begin Collaboration
                 </Link>
