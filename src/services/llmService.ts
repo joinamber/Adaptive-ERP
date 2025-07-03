@@ -1,66 +1,63 @@
 import { rfpKnowledgeBase } from '@/data/rfpKnowledgeBase';
-import Groq from 'groq-sdk';
-import { getGroqSettings } from '@/components/SettingsModal';
 
 class LLMService {
-  private groqClient: Groq | null = null;
-  private isInitialized = false;
+  private isAvailable = false;
 
   async initialize() {
-    if (this.isInitialized) return;
-    
+    // Check if Netlify function is available
     try {
-      const { apiKey } = getGroqSettings();
-      if (!apiKey) {
-        throw new Error('Groq API key not configured');
-      }
-      
-      this.groqClient = new Groq({
-        apiKey,
-        dangerouslyAllowBrowser: true
+      const response = await fetch('/.netlify/functions/groq-proxy', {
+        method: 'OPTIONS'
       });
-      
-      this.isInitialized = true;
+      this.isAvailable = response.status === 200;
     } catch (error) {
-      console.error('Failed to initialize LLM:', error);
-      this.isInitialized = false;
-      throw error;
+      console.log('Netlify function not available, using mock content');
+      this.isAvailable = false;
     }
   }
 
   async generateContent(section: string, context: any, userPrompt?: string): Promise<string> {
-    if (!this.groqClient || !this.isInitialized) {
-      // Fallback to mock content if Groq is not available
+    if (!this.isAvailable) {
       return this.generateMockContent(section, context, userPrompt);
     }
 
     try {
-      return await this.generateGroqContent(section, context, userPrompt);
+      return await this.generateNetlifyContent(section, context, userPrompt);
     } catch (error) {
-      console.error('Groq generation failed, falling back to mock:', error);
+      console.error('Netlify function failed, falling back to mock:', error);
       return this.generateMockContent(section, context, userPrompt);
     }
   }
 
-  private async generateGroqContent(section: string, context: any, userPrompt?: string): Promise<string> {
-    const { model } = getGroqSettings();
+  private async generateNetlifyContent(section: string, context: any, userPrompt?: string): Promise<string> {
     const { basicInfo } = context;
     
     const systemPrompt = this.getSystemPrompt(section);
     const userMessage = this.buildUserMessage(section, basicInfo, userPrompt);
 
-    const completion = await this.groqClient!.chat.completions.create({
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userMessage }
-      ],
-      model,
-      temperature: 0.7,
-      max_tokens: 2500,
-      top_p: 0.9,
+    const response = await fetch('/.netlify/functions/groq-proxy', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userMessage }
+        ],
+        model: 'llama3-8b-8192',
+        temperature: 0.7,
+        max_tokens: 2500,
+        top_p: 0.9,
+      }),
     });
 
-    return completion.choices[0]?.message?.content || this.generateMockContent(section, context, userPrompt);
+    if (!response.ok) {
+      throw new Error(`Netlify function failed: ${response.status}`);
+    }
+
+    const result = await response.json();
+    return result.content || this.generateMockContent(section, context, userPrompt);
   }
 
   private getSystemPrompt(section: string): string {
