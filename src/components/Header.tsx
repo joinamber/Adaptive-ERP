@@ -17,7 +17,7 @@ const Header: React.FC = () => {
   return <header className="bg-background/95 backdrop-blur-sm border-b border-border sticky top-0 z-50">
       <div className="rfp-container py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center space-x-3">
-          <img src="/lovable-uploads/e2efb9e3-5ec3-4651-83aa-fc193ed61c0f.png" alt="AI Research Institute Logo" className="h-10 w-auto" />
+          <img alt="AI Research Institute Logo" className="h-10 w-auto" src="/lovable-uploads/e5dfa81a-d3ad-42d3-8bd3-c58bc96d7c9d.jpg" />
           <span className="font-heading text-xl font-medium text-foreground ml-2 hidden md:inline">Adaptive Intelligence</span>
         </Link>
         
