@@ -50,12 +50,6 @@ const Header: React.FC = () => {
       {isMobile && mobileMenuOpen && <div className="md:hidden bg-background border-t border-border py-4">
           <div className="rfp-container flex flex-col space-y-4">
             {isRfpPage ? <>
-                <Link to="/rfp" className="px-4 py-2 text-muted-foreground hover:text-accent transition-colors" onClick={toggleMobileMenu}>
-                  Research Collaboration
-                </Link>
-                {location.pathname === '/rfp' && <a href="#how-it-works" className="px-4 py-2 text-muted-foreground hover:text-accent transition-colors" onClick={toggleMobileMenu}>
-                    Methodology
-                  </a>}
                 <Link to="/" className="px-4 py-2 text-muted-foreground hover:text-accent transition-colors" onClick={toggleMobileMenu}>
                   Institute Home
                 </Link>
