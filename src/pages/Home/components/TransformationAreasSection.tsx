@@ -21,28 +21,28 @@ const TransformationAreasSection: React.FC<TransformationAreasSectionProps> = ({
         </h2>
         
         <Tabs 
-          defaultValue="ecommerce" 
+          defaultValue="banking" 
           value={activeTab} 
           onValueChange={setActiveTab as (value: string) => void}
           className="w-full"
         >
-          <div className="flex justify-center mb-8 md:mb-12 overflow-x-auto pb-2">
-            <TabsList className="mb-2">
+          <div className="flex justify-center mb-8 md:mb-12">
+            <TabsList className="bg-muted/50 border border-border/50 shadow-soft rounded-lg p-1">
               <TabsTrigger 
                 value="banking"
-                className={`px-3 md:px-6 py-2 md:py-3 text-base md:text-lg font-medium ${activeTab === 'banking' ? 'text-adaptive-secondary border-b-2 border-adaptive-secondary' : 'text-gray-600'}`}
+                className="text-base md:text-lg font-medium px-4 md:px-6 py-3 md:py-4 rounded-md transition-all duration-200 data-[state=active]:bg-background data-[state=active]:text-accent data-[state=active]:shadow-sm"
               >
                 Banking & Finance
               </TabsTrigger>
               <TabsTrigger 
                 value="ecommerce"
-                className={`px-3 md:px-6 py-2 md:py-3 text-base md:text-lg font-medium ${activeTab === 'ecommerce' ? 'text-adaptive-secondary border-b-2 border-adaptive-secondary' : 'text-gray-600'}`}
+                className="text-base md:text-lg font-medium px-4 md:px-6 py-3 md:py-4 rounded-md transition-all duration-200 data-[state=active]:bg-background data-[state=active]:text-accent data-[state=active]:shadow-sm"
               >
                 Ecommerce Operations
               </TabsTrigger>
               <TabsTrigger 
                 value="logistics"
-                className={`px-3 md:px-6 py-2 md:py-3 text-base md:text-lg font-medium ${activeTab === 'logistics' ? 'text-adaptive-secondary border-b-2 border-adaptive-secondary' : 'text-gray-600'}`}
+                className="text-base md:text-lg font-medium px-4 md:px-6 py-3 md:py-4 rounded-md transition-all duration-200 data-[state=active]:bg-background data-[state=active]:text-accent data-[state=active]:shadow-sm"
               >
                 Logistics & Supply Chain
               </TabsTrigger>

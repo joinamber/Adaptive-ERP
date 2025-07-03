@@ -14,7 +14,7 @@ import QuoteSection from "./components/QuoteSection";
 import CtaSection from "./components/CtaSection";
 
 const Home: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<TransformationDataKey>("ecommerce");
+  const [activeTab, setActiveTab] = useState<TransformationDataKey>("banking");
   const bottomSectionRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
