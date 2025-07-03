@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { useRfp } from '@/contexts/RfpContext';
+import { useRfp, RfpData } from '@/contexts/RfpContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import StepIndicator from '@/components/StepIndicator';
@@ -43,7 +43,8 @@ const RfpBasicInfo = () => {
 
   const onSubmit = async (data: BasicInfoFormData) => {
     try {
-      updateRfpData(data);
+      // Type assertion is safe here because Zod validation ensures all required fields are present
+      updateRfpData(data as Partial<RfpData>);
       setCurrentStep('overview');
       
       toast({
