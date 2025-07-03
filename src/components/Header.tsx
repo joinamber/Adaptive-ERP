@@ -24,12 +24,8 @@ const Header: React.FC = () => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
           {isRfpPage ? <>
-              <Link to="/rfp" className="text-muted-foreground hover:text-accent transition-colors">
-                Research Collaboration
-              </Link>
-              {location.pathname === '/rfp' && <a href="#how-it-works" className="text-muted-foreground hover:text-accent transition-colors">
-                  Methodology
-                </a>}
+              
+              {location.pathname === '/rfp'}
               <SettingsModal />
               <Button variant="outline" asChild>
                 <Link to="/">Institute Home</Link>
