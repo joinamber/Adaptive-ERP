@@ -36,11 +36,11 @@ const Footer: React.FC = () => {
           <h4 className="text-lg font-semibold mb-4">Connect With Us</h4>
           <div className="space-y-2">
             <a 
-              href="mailto:hello@coaltlab.com" 
+              href="mailto:hello@adptv.xyz" 
               className="flex items-center text-sm hover:text-adaptive-secondary transition-colors"
             >
               <Mail className="h-4 w-4 mr-2" />
-              <span>hello@coaltlab.com</span>
+              <span>hello@adptv.xyz</span>
             </a>
             <div className="flex space-x-4 mt-2">
               <a 
