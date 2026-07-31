@@ -4,14 +4,14 @@ class LLMService {
   private isAvailable = false;
 
   async initialize() {
-    // Check if Netlify function is available
+    // Check if the AI proxy function is available
     try {
-      const response = await fetch('/.netlify/functions/groq-proxy', {
+      const response = await fetch('/api/groq-proxy', {
         method: 'OPTIONS'
       });
       this.isAvailable = response.status === 200;
     } catch (error) {
-      console.log('Netlify function not available, using mock content');
+      console.log('AI proxy not available, using mock content');
       this.isAvailable = false;
     }
   }
@@ -22,20 +22,20 @@ class LLMService {
     }
 
     try {
-      return await this.generateNetlifyContent(section, context, userPrompt);
+      return await this.generateProxyContent(section, context, userPrompt);
     } catch (error) {
-      console.error('Netlify function failed, falling back to mock:', error);
+      console.error('AI proxy failed, falling back to mock:', error);
       return this.generateMockContent(section, context, userPrompt);
     }
   }
 
-  private async generateNetlifyContent(section: string, context: any, userPrompt?: string): Promise<string> {
+  private async generateProxyContent(section: string, context: any, userPrompt?: string): Promise<string> {
     const { basicInfo } = context;
-    
+
     const systemPrompt = this.getSystemPrompt(section);
     const userMessage = this.buildUserMessage(section, basicInfo, userPrompt);
 
-    const response = await fetch('/.netlify/functions/groq-proxy', {
+    const response = await fetch('/api/groq-proxy', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ class LLMService {
     });
 
     if (!response.ok) {
-      throw new Error(`Netlify function failed: ${response.status}`);
+      throw new Error(`AI proxy failed: ${response.status}`);
     }
 
     const result = await response.json();
