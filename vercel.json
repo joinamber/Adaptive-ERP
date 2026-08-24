@@ -1,5 +1,6 @@
 {
   "rewrites": [
+    { "source": "/creativeacts/:path*", "destination": "https://creativeacts.vercel.app/creativeacts/:path*" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }
