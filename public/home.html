@@ -125,7 +125,6 @@ nav.links a:after{
   transition:transform .45s var(--ease);
 }
 nav.links a:hover:after{transform:scaleX(1)}
-nav.links .dash{width:22px;height:1px;background:rgba(255,255,255,.4);transition:background .5s var(--ease)}
 
 header.nav.solid{
   background:rgba(247,243,240,.82);
@@ -135,7 +134,6 @@ header.nav.solid{
 }
 header.nav.solid .mark{color:var(--ink)}
 header.nav.solid nav.links a{color:var(--ink)}
-header.nav.solid nav.links .dash{background:var(--line)}
 .menu-btn{display:none;background:none;border:0;padding:6px;cursor:pointer}
 .menu-btn span{display:block;width:22px;height:1.5px;background:#fff;margin:5px 0;transition:background .5s var(--ease),transform .4s var(--ease),opacity .3s}
 header.nav.solid .menu-btn span{background:var(--ink)}
@@ -148,7 +146,6 @@ header.nav.solid .menu-btn span{background:var(--ink)}
   }
   nav.links.open{opacity:1;pointer-events:auto}
   nav.links a{color:#fff !important;font-size:30px;font-family:"Instrument Serif",Georgia,serif;letter-spacing:-.02em}
-  nav.links .dash{display:none}
   .menu-btn{display:block;position:relative;z-index:70}
   .menu-btn.open span{background:#fff}
   .menu-btn.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
@@ -415,7 +412,6 @@ footer{border-top:var(--rule);padding:clamp(44px,5vw,72px) 0 34px}
       <a href="#limits">Limits</a>
       <a href="#method">Method</a>
       <a href="#domains">Domains</a>
-      <span class="dash"></span>
       <a href="mailto:amber@adptv.xyz">Contact</a>
     </nav>
     <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
