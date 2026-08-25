@@ -16,10 +16,10 @@ const Header: React.FC = () => {
   };
   return <header className="bg-background/95 backdrop-blur-sm border-b border-border sticky top-0 z-50">
       <div className="rfp-container py-4 flex items-center justify-between">
-        <Link to="/" className="flex items-center space-x-3">
+        <a href="/" className="flex items-center space-x-3">
           <img alt="Adaptive Intelligence Logo" className="h-10 w-auto" width={40} height={40} src="/lovable-uploads/e5dfa81a-d3ad-42d3-8bd3-c58bc96d7c9d.jpg" />
           <span className="font-heading text-xl font-medium text-foreground ml-2 hidden md:inline">Adaptive Intelligence</span>
-        </Link>
+        </a>
         
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
@@ -28,7 +28,7 @@ const Header: React.FC = () => {
               {location.pathname === '/rfp'}
               <SettingsModal />
               <Button variant="outline" asChild>
-                <Link to="/">Institute Home</Link>
+                <a href="/">Institute Home</a>
               </Button>
             </> : <>
               
@@ -50,9 +50,9 @@ const Header: React.FC = () => {
       {isMobile && mobileMenuOpen && <div className="md:hidden bg-background border-t border-border py-4">
           <div className="rfp-container flex flex-col space-y-4">
             {isRfpPage ? <>
-                <Link to="/" className="px-4 py-2 text-muted-foreground hover:text-accent transition-colors" onClick={toggleMobileMenu}>
+                <a href="/" className="px-4 py-2 text-muted-foreground hover:text-accent transition-colors" onClick={toggleMobileMenu}>
                   Institute Home
-                </Link>
+                </a>
               </> : <>
                 <Link to="/rfp" className="px-4 py-2 text-muted-foreground hover:text-accent transition-colors" onClick={toggleMobileMenu}>
                   Begin Collaboration
