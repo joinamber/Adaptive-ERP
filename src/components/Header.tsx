@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -23,17 +23,10 @@ const Header: React.FC = () => {
         
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
-          {isRfpPage ? <>
-              
-              {location.pathname === '/rfp'}
+          {isRfpPage && <>
               <SettingsModal />
               <Button variant="outline" asChild>
                 <a href="/">Institute Home</a>
-              </Button>
-            </> : <>
-              
-              <Button variant="outline" asChild>
-                <Link to="/rfp">Begin Collaboration</Link>
               </Button>
             </>}
         </nav>
@@ -49,15 +42,9 @@ const Header: React.FC = () => {
       {/* Mobile Menu */}
       {isMobile && mobileMenuOpen && <div className="md:hidden bg-background border-t border-border py-4">
           <div className="rfp-container flex flex-col space-y-4">
-            {isRfpPage ? <>
-                <a href="/" className="px-4 py-2 text-muted-foreground hover:text-accent transition-colors" onClick={toggleMobileMenu}>
-                  Institute Home
-                </a>
-              </> : <>
-                <Link to="/rfp" className="px-4 py-2 text-muted-foreground hover:text-accent transition-colors" onClick={toggleMobileMenu}>
-                  Begin Collaboration
-                </Link>
-              </>}
+            {isRfpPage && <a href="/" className="px-4 py-2 text-muted-foreground hover:text-accent transition-colors" onClick={toggleMobileMenu}>
+                Institute Home
+              </a>}
           </div>
         </div>}
     </header>;
