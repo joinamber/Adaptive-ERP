@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
               height={40}
               loading="lazy"
             />
-            <span className="text-xl font-semibold">Adaptive Intelligence</span>
+            <span className="font-heading text-xl font-medium">Adaptive Intelligence</span>
           </div>
           <p className="text-sm text-primary-foreground/70">
             Reimagining of how organizations operate and evolve
@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
 
         {/* Connect With Us Column */}
         <div className="space-y-4">
-          <h4 className="text-lg font-semibold mb-4">Connect With Us</h4>
+          <h4 className="font-heading text-lg font-medium mb-4">Connect With Us</h4>
           <div className="space-y-2">
             <a
               href="mailto:amber@adptv.xyz"
@@ -48,7 +48,7 @@ const Footer: React.FC = () => {
                 rel="noopener noreferrer"
                 className="text-primary-foreground hover:text-accent transition-colors"
               >
-                <Linkedin className="h-6 w-6" />
+                <Linkedin className="h-4 w-4" />
               </a>
               <a
                 href="https://x.com/gocreativeacts"
@@ -56,12 +56,12 @@ const Footer: React.FC = () => {
                 rel="noopener noreferrer"
                 className="text-primary-foreground hover:text-accent transition-colors"
               >
-                <XLogo className="h-5 w-5" />
+                <XLogo className="h-4 w-4" />
               </a>
             </div>
           </div>
           <div className="pt-4 mt-4 border-t border-primary-foreground/20">
-            <p className="text-sm text-primary-foreground/70">© 2025 Adaptive Intelligence Pte. Ltd. All Rights Reserved.</p>
+            <p className="text-sm text-primary-foreground/70">© 2026 Adaptive Intelligence Pte. Ltd. All Rights Reserved.</p>
           </div>
         </div>
       </div>
