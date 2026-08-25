@@ -187,8 +187,26 @@ header.nav.solid .menu-btn span{background:var(--ink)}
 .hero h1{
   font-family:"Instrument Serif",Georgia,serif;font-weight:400;
   font-size:clamp(40px,6.4vw,92px);line-height:1.03;letter-spacing:-.02em;
-  color:#fff;max-width:17ch;
-  text-shadow:0 1px 40px rgba(10,14,30,.18);
+  max-width:17ch;
+  /* The headline crosses the gradient from mid-blue into pale cream, so it is
+     inked in the sky's own blues rather than white, darkest at the top where
+     the ground is deepest. Solid fallback first. */
+  color:#16233F;
+}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  /* Each word carries its own slice of the ramp; inkHeadline() sets
+     background-size/position per word so the slices line up across both
+     lines. The gradient sits on the word rather than the h1 because each
+     word is transformed by the entrance animation, which would otherwise
+     isolate it from a background clipped on the parent. */
+  .hero h1 .w i{
+    background-image:linear-gradient(180deg,#101B33 0%,#1E3557 46%,#2C4A7C 100%);
+    background-repeat:no-repeat;
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    color:transparent;
+  }
 }
 .hero h1 .w{display:inline-block;overflow:hidden;vertical-align:top}
 .hero h1 .w i{
@@ -198,7 +216,7 @@ header.nav.solid .menu-btn span{background:var(--ink)}
   animation-delay:calc(var(--i) * 55ms + 260ms);
 }
 @keyframes wordUp{to{transform:translateY(0)}}
-.hero h1 em{font-style:italic;color:#FFF6DC}
+.hero h1 em{font-style:italic}
 
 .hero-foot{
   margin-top:clamp(28px,5vh,56px);
@@ -721,6 +739,23 @@ footer{border-top:var(--rule);padding:clamp(44px,5vw,72px) 0 34px}
     }).join(' ');
   }
 
+  /* Align each word's gradient slice to its position within the headline, so
+     the per-word backgrounds read as a single ramp. Re-run whenever the
+     headline reflows (font load, resize). */
+  function inkHeadline(){
+    if (!h1) return;
+    var box = h1.getBoundingClientRect();
+    h1.querySelectorAll('.w').forEach(function(w){
+      var ink = w.firstElementChild;
+      if (!ink) return;
+      var top = w.getBoundingClientRect().top - box.top;
+      ink.style.backgroundSize = '100% ' + box.height + 'px';
+      ink.style.backgroundPosition = '0 ' + (-top) + 'px';
+    });
+  }
+  inkHeadline();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(inkHeadline);
+
   /* ---- header state ---- */
   var hdr = document.getElementById('hdr');
   var hero = document.querySelector('.hero');
@@ -832,7 +867,7 @@ footer{border-top:var(--rule);padding:clamp(44px,5vw,72px) 0 34px}
   function plates(){ document.querySelectorAll('.plate canvas').forEach(plate); }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(plates);
   plates();
-  var rt; window.addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(plates, 180); });
+  var rt; window.addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(function(){ plates(); inkHeadline(); }, 180); });
 
   /* ---- smooth anchors ---- */
   document.querySelectorAll('a[href^="#"]').forEach(function(a){
