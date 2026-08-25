@@ -26,7 +26,7 @@ const Footer: React.FC = () => {
             <span className="font-heading text-xl font-medium">Adaptive Intelligence</span>
           </div>
           <p className="text-sm text-primary-foreground/70">
-            Reimagining of how organizations operate and evolve
+            Advancing the frontier of enterprise intelligence through rigorous research and engineering
           </p>
         </div>
 
