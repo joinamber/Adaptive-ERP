@@ -28,7 +28,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-adaptive-background">
+    <div className="min-h-screen flex flex-col bg-background">
       <Header />
       
       {/* Hero Section */}
